@@ -16,3 +16,40 @@ var {x} = {x:'asdasd', y:'adsdas'}
 //git init
 git remote add origin git@github.com:katkinso/node-course-2-todo-api.git
 git push -u origin master
+
+//mongoose - ORM
+lib allows structure of data
+certain properties, validation etc
+instead of using mongo native driver
+
+
+
+
+
+//new instance
+// var newTodo = new Todo({
+//   text:'Eat dinner',
+//   completed: false,
+//   completedAt: 1232
+// })
+
+// newTodo.save().then((doc) => {
+//   console.log(`Saved todo ${doc}`)
+//
+// },(e) => {
+//   console.log('unable to save todo')
+// })
+
+
+
+//set up new user
+var newUser = new User({
+  email:'kate@hooo.com'
+})
+
+//write to db
+newUser.save().then((doc) => {
+  console.log(`Saved user ${doc}`)
+},(e) => {
+  console.log('unable to save user')
+})
