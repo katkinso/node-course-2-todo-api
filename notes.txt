@@ -27,6 +27,32 @@ instead of using mongo native driver
 - mocha - testsuiet
 - supertest - for routes
 
+//deploy to heroku
+const port = process.env.PORT || 3000 //setting port for heroku //server.js
+"scripts": { //pakcage.json
+  "start": "node server/server.js",
+
+//Version of node
+"engines":{
+  "node":"v8.5.0"
+},
+
+//Create new herkou app
+Heroku create
+> https://warm-ridge-59744.herokuapp.com/ | https://git.heroku.com/warm-ridge-59744.git
+
+Set addon
+heroku addons:create mongolab:sandbox
+
+heroku config
+=== warm-ridge-59744 Config Vars
+MONGODB_URI: mongodb://heroku_fzbhg61c:b9n2lamnb832q6cfcea0pr4tdc@ds163301.mlab.com:63301/heroku_fzbhg61c
+
+--SET TO use heroku mongo
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/TodoApp')
+
+
+
 
 
 
