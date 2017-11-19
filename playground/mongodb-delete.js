@@ -37,5 +37,6 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
   })
 
 
+
   // db.close()
 }) //connecs\ts to db - url db lives, callback fire after connection succeeded or failed
