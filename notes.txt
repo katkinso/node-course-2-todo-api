@@ -22,6 +22,10 @@ lib allows structure of data
 certain properties, validation etc
 instead of using mongo native driver
 
+// TESTINg
+- expect - for assertions
+- mocha - testsuiet
+- supertest - for routes
 
 
 
