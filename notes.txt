@@ -1,0 +1,14 @@
+./mongod --dbpath ~/mongo-data -- starts db
+./mongo starts sever and check - the shell
+db.Todos.insert({text:'film new node course' })
+db.Todos.find()
+
+robomongo - UI tool
+- collection -> document -> field
+
+node mongodb-native
+
+npm install mongodb@2.2.5 --save
+
+// object destructuring - pull out items form obejcts and set them to variables
+var {x} = {x:'asdasd', y:'adsdas'}
