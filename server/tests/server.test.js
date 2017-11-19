@@ -5,10 +5,26 @@ const {app} = require('./../server')
 const {Todo} = require('./../models/todo')
 
 
-//testing lifecycle method - does before each test
+const todos = [
+  {
+    text: 'test todo 1'
+  },
+  {
+    text: 'test todo 2'
+  }
+]
+
+
 beforeEach((done) => {
-  Todo.remove().then(() => done ())
+  Todo.remove().then(() => {
+    return Todo.insertMany(todos)
+  }).then(() => done())
 })
+
+//testing lifecycle method - does before each test -
+// beforeEach((done) => {
+//   Todo.remove().then(() => done ())
+// })
 
 
 describe('POST /todos',() => {
@@ -29,7 +45,7 @@ describe('POST /todos',() => {
           return done(err) //ends and stops execution
         }
 
-        Todo.find().then((todos) => {
+        Todo.find({text}).then((todos) => {
           expect(todos.length).toBe(1)
           expect(todos[0].text).toBe(text)
           done()
@@ -50,11 +66,28 @@ describe('POST /todos',() => {
             }
 
             Todo.find().then((todos) => {
-              expect(todos.length).toBe(0)
+              expect(todos.length).toBe(2)
               done()
             }).catch((e) => done(e))
           })
 
     })
 
-})//desc
+})//desc POST
+// ***********
+
+
+describe('GET /todos',() => {
+
+  it('Should get all todos', (done) => {
+    request(app)
+      .get('/todos')
+      .expect(400)
+      .expect((res) => { //gets passed response
+         expect(res.body.length).toBe(2)
+      })
+      .end(done)
+  })
+
+
+})
