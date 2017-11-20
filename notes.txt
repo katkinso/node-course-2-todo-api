@@ -51,8 +51,11 @@ MONGODB_URI: mongodb://heroku_fzbhg61c:b9n2lamnb832q6cfcea0pr4tdc@ds163301.mlab.
 --SET TO use heroku mongo
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/TodoApp')
 
+-->git push
+-->git push heroku master
 
-
+HEROKU - LOGS
+heroku logs
 
 
 

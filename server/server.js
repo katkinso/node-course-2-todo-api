@@ -35,6 +35,10 @@ app.get('/todos',(req,res) =>{
 app.get('/todos/:id',(req,res) => {
   // res.send(req.params) //get value from req get
   //validate id using isvalidid is not stop and respond with 404 - send empty body
+  //findby id
+    //success - if todo send it back, if no todo then call succesed & not found then send back 404 & eptyy
+    //err - 400 & send empty body back
+
   var id = req.params.id
   if(!ObjectID.isValid(id)){
     return res.status(404).send()
@@ -49,13 +53,26 @@ app.get('/todos/:id',(req,res) => {
   },(e) => {
     res.status(400).send()
   })
+}) //GET by ID
 
-  //findby id
-    //success - if todo send it back, if no todo then call succesed & not found then send back 404 & eptyy
-    //err - 400 & send empty body back
+app.delete('/todos/:id',(req,res) => {
+  var id = req.params.id
+  if(!ObjectID.isValid(id)){
+    return res.status(404).send()
+  }
+
+  Todo.findByIdAndRemove(id).then((todo) => {
+     if(!todo){
+       return res.status(404).send('404 Not Found')
+     }
+     res.send({todo})
+  }).catch((e) => {
+    res.status(400).send()
+  })
+
+}) //DEL by ID
 
 
-})
 
 app.listen(port, () => {
   console.log(`started on port ${port}`)
