@@ -73,6 +73,7 @@ app.delete('/todos/:id',(req,res) => {
 
 }) //DEL by ID
 
+//only updating some items
 app.patch('/todos/:id',(req, res) => {
     var id = req.params.id
     var body = _.pick(req.body,['text','completed']) //pick subset of items user passed
@@ -84,7 +85,6 @@ app.patch('/todos/:id',(req, res) => {
     //updated completedAt
     if (_.isBoolean(body.completed) && body.completed){
       body.completedAt = new Date().getTime()
-      console.log(body)
     }else{
       body.completed = false
       body.completedAt = null
