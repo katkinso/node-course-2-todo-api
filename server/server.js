@@ -1,5 +1,6 @@
-var express = require('express')
-var bodyParser = require('body-parser')
+const _ = require('lodash')
+const express = require('express')
+const bodyParser = require('body-parser')
 
 const {ObjectID} = require('mongodb')
 var { mongoose } = require('./db/mongoose')
@@ -72,7 +73,35 @@ app.delete('/todos/:id',(req,res) => {
 
 }) //DEL by ID
 
+app.patch('/todos/:id',(req, res) => {
+    var id = req.params.id
+    var body = _.pick(req.body,['text','completed']) //pick subset of items user passed
 
+    if(!ObjectID.isValid(id)){
+      return res.status(404).send()
+    }
+
+    //updated completedAt
+    if (_.isBoolean(body.completed) && body.completed){
+      body.completedAt = new Date().getTime()
+      console.log(body)
+    }else{
+      body.completed = false
+      body.completedAt = null
+    }
+
+    //update DB - Mongoose
+    Todo.findByIdAndUpdate(id, {$set:body}, {new:true}).then((todo) => {
+        if (!Todo){
+          return res.status(404).send()
+        }
+        res.send({todo})
+
+    }).catch((e) => {
+      res.status(400).send()
+    })
+
+})
 
 app.listen(port, () => {
   console.log(`started on port ${port}`)
