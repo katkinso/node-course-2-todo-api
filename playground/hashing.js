@@ -1,18 +1,38 @@
 //SHA 256 - crypto.js
 const {SHA256} = require('crypto-js') //playground only
 const jwt = require(`jsonwebtoken`)
+const bcrypt = require('bcryptjs')
 
+
+//BCRYPT INFO FOR HASHING PWDS *********************************************
+var password = '123abc!'
+//salt pwds
+//10 rounds - bcrypt intentionally slow - stops brute force
+// bcrypt.genSalt(10, (err,salt) => {
+//   bcrypt.hash(password, salt, (err, hash) => {
+//     console.log(hash)
+//   })
+// })
+
+var hashedPassword = '$2a$10$ZPVHdNiyNj8JwAM/cUkCw.qRFxa3kq6Friw0pYjlHw0pM1fxy3opi'
+
+//take plain text value and compare to hashed
+bcrypt.compare(password, hashedPassword, (err,res) => {
+  console.log(res) //true
+})
+
+//JWT INFO *********************************************
 // npm i jsonwebtoken@7.1.9 --save
 // jwt.sign - takes object and signs it (creates hash)
 // jwt.verify - takes token and secret and makes sure the data was not manipulated
 
-var data = {
-  id: 10
-}
-var token = jwt.sign(data,'123abc') //produces a token and store in token array. checks the
-console.log(token)
-var decoded = jwt.verify(token, '123abc')
-console.log('decoded', decoded)
+// var data = {
+//   id: 10
+// }
+// var token = jwt.sign(data,'123abc') //produces a token and store in token array. checks the
+// console.log(token)
+// var decoded = jwt.verify(token, '123abc')
+// console.log('decoded', decoded)
 
 // decoded { id: 10, iat: 1511310783 } Date/Time
 // Data must be same decoded
