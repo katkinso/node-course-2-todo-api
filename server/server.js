@@ -104,6 +104,24 @@ app.patch('/todos/:id',(req, res) => {
     })
 
 })
+//User - model method. User.findByToken is a custom model method
+//user.generateAuthToken - method on instance of user.
+
+//POST to users & user _.Pick to get properties (email and pwd for body var)
+app.post('/users',(req,res) => {
+
+  var body = _.pick(req.body, ['email', 'password'])
+  var user = new User(body)
+  //
+  user.save().then(() => {
+    return user.generateAuthToken()
+  //   // res.send(doc)
+  }).then((token) => {
+    res.header('x-auth', token).send(user)
+  }).catch((e) => {
+    res.status(400).send(e)
+  })
+})
 
 app.listen(port, () => {
   console.log(`started on port ${port}`)
