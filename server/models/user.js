@@ -53,6 +53,32 @@ UserSchema.methods.generateAuthToken = function () {
   })
 }//fn
 
+
+//statics is like an instance method, but on model
+UserSchema.statics.findByToken = function (token) {
+    var User = this //model
+    var decoded
+
+    //if error in try then moved to catch and cont w/program
+    try{
+      decoded = jwt.verify(token, 'abc123')
+    }catch (e){
+      // return new Promise((resolve, reject) => {
+      //   reject()
+      // })
+      return Promise.reject() //shortcut
+    }
+
+    //success decoded
+    return User.findOne({
+      '_id': decoded._id,
+      'tokens.token': token,
+      'tokens.access':'auth'
+    })
+}
+
+
+
 //create a user model
 var User = mongoose.model('User', UserSchema)
 module.exports = { User }
