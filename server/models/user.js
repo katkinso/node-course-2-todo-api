@@ -78,7 +78,7 @@ UserSchema.statics.findByToken = function (token) {
     })
 }
 
-//middleware to hash pwds before calling SAVE
+//middleware to hash pwds before calling SAVE GLOBAL
 UserSchema.pre('save', function (next) {
   var user = this
   if (user.isModified('password')){
