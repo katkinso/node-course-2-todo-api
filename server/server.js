@@ -125,7 +125,7 @@ app.post('/users',(req,res) => {
   })
 })
 
-//use middleware to get token
+//requires user to be authenticated, use middleware to get token
 app.get('/users/me',authenticate, (req,res) =>{
   res.send(req.user)
 })
